@@ -1,4 +1,5 @@
 import { request } from '@/utils'
+import { get } from 'lodash-es'
 
 export default {
   login: (data) => request.post('/base/access_token', data, { noNeedToken: true }),
@@ -39,4 +40,17 @@ export default {
   deleteDept: (params = {}) => request.delete('/dept/delete', { params }),
   // auditlog
   getAuditLogList: (params = {}) => request.get('/auditlog/list', { params }),
+
+  // management
+  // client
+  getClientList: (params = {}) => request.get('/management/getClientList', { params }),
+  createClient: (data = {}) => request.post('/management/addClient', data),
+  updateClient: (data = {}) => request.post('/management/updateClient', data),
+  deleteClient: (clientId) => request.delete(`/management/deleteClient/${clientId}`),
+  // provider
+  getProviderList: (params = {}) => request.get('/management/getProviderList', { params }),
+  getProviderById: (providerId) =>  request.get(`/management/getProviderById/${providerId}`),
+  createProvider: (data = {}) => request.post('/management/addProvider', data),
+  updateProvider: (data = {}) => request.post('/management/updateProvider', data),
+  deleteProvider: (providerId) => request.delete(`/management/deleteProvider/${providerId}`),
 }

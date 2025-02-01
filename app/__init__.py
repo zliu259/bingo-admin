@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from tortoise import Tortoise
-
+from fastapi.middleware.cors import CORSMiddleware
 from app.core.exceptions import SettingNotFound
 from app.core.init_app import (
     init_data,
@@ -39,3 +39,15 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3100",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
