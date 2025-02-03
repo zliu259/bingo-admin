@@ -1,3 +1,88 @@
+<template>
+  <CommonPage :show-header="false">
+    <NTabs type="line" animated>
+      <NTabPane name="Account">
+        <Info />
+      </NTabPane>
+      <NTabPane name="website" :tab="$t('views.profile.label_modify_information')">
+        <div class="m-30 flex items-center">
+          <NForm
+            ref="infoFormRef"
+            label-placement="left"
+            label-align="left"
+            label-width="100"
+            :model="infoForm"
+            :rules="infoFormRules"
+            class="w-400"
+          >
+            <NFormItem :label="$t('views.profile.label_avatar')" path="avatar">
+              <NImage width="100" :src="infoForm.avatar"></NImage>
+            </NFormItem>
+            <NFormItem :label="$t('views.profile.label_username')" path="username">
+              <NInput
+                v-model:value="infoForm.username"
+                type="text"
+                :placeholder="$t('views.profile.placeholder_username')"
+              />
+            </NFormItem>
+            <NFormItem :label="$t('views.profile.label_email')" path="email">
+              <NInput
+                v-model:value="infoForm.email"
+                type="text"
+                :placeholder="$t('views.profile.placeholder_email')"
+              />
+            </NFormItem>
+            <NButton type="primary" :loading="isLoading" @click="updateProfile">
+              {{ $t('common.buttons.update') }}
+            </NButton>
+          </NForm>
+        </div>
+      </NTabPane>
+      <NTabPane name="contact" :tab="$t('views.profile.label_change_password')">
+        <NForm
+          ref="passwordFormRef"
+          label-placement="left"
+          label-align="left"
+          :model="passwordForm"
+          label-width="200"
+          :rules="passwordFormRules"
+          class="m-30 w-500"
+        >
+          <NFormItem :label="$t('views.profile.label_old_password')" path="old_password">
+            <NInput
+              v-model:value="passwordForm.old_password"
+              type="password"
+              show-password-on="mousedown"
+              :placeholder="$t('views.profile.placeholder_old_password')"
+            />
+          </NFormItem>
+          <NFormItem :label="$t('views.profile.label_new_password')" path="new_password">
+            <NInput
+              v-model:value="passwordForm.new_password"
+              :disabled="!passwordForm.old_password"
+              type="password"
+              show-password-on="mousedown"
+              :placeholder="$t('views.profile.placeholder_new_password')"
+            />
+          </NFormItem>
+          <NFormItem :label="$t('views.profile.label_confirm_password')" path="confirm_password">
+            <NInput
+              v-model:value="passwordForm.confirm_password"
+              :disabled="!passwordForm.new_password"
+              type="password"
+              show-password-on="mousedown"
+              :placeholder="$t('views.profile.placeholder_confirm_password')"
+            />
+          </NFormItem>
+          <NButton type="primary" :loading="isLoading" @click="updatePassword">
+            {{ $t('common.buttons.update') }}
+          </NButton>
+        </NForm>
+      </NTabPane>
+    </NTabs>
+  </CommonPage>
+</template>
+
 <script setup>
 import { ref } from 'vue'
 import { NButton, NForm, NFormItem, NInput, NTabPane, NTabs, NImage } from 'naive-ui'
@@ -6,6 +91,7 @@ import CommonPage from '@/components/page/CommonPage.vue'
 import { useUserStore } from '@/store'
 import api from '@/api'
 import { is } from '~/src/utils'
+import Info from './info.vue'
 
 const { t } = useI18n()
 const userStore = useUserStore()
@@ -117,86 +203,5 @@ function validatePasswordStartWith(rule, value) {
 function validatePasswordSame(rule, value) {
   return value === passwordForm.value.new_password
 }
-</script>
 
-<template>
-  <CommonPage :show-header="false">
-    <NTabs type="line" animated>
-      <NTabPane name="website" :tab="$t('views.profile.label_modify_information')">
-        <div class="m-30 flex items-center">
-          <NForm
-            ref="infoFormRef"
-            label-placement="left"
-            label-align="left"
-            label-width="100"
-            :model="infoForm"
-            :rules="infoFormRules"
-            class="w-400"
-          >
-            <NFormItem :label="$t('views.profile.label_avatar')" path="avatar">
-              <NImage width="100" :src="infoForm.avatar"></NImage>
-            </NFormItem>
-            <NFormItem :label="$t('views.profile.label_username')" path="username">
-              <NInput
-                v-model:value="infoForm.username"
-                type="text"
-                :placeholder="$t('views.profile.placeholder_username')"
-              />
-            </NFormItem>
-            <NFormItem :label="$t('views.profile.label_email')" path="email">
-              <NInput
-                v-model:value="infoForm.email"
-                type="text"
-                :placeholder="$t('views.profile.placeholder_email')"
-              />
-            </NFormItem>
-            <NButton type="primary" :loading="isLoading" @click="updateProfile">
-              {{ $t('common.buttons.update') }}
-            </NButton>
-          </NForm>
-        </div>
-      </NTabPane>
-      <NTabPane name="contact" :tab="$t('views.profile.label_change_password')">
-        <NForm
-          ref="passwordFormRef"
-          label-placement="left"
-          label-align="left"
-          :model="passwordForm"
-          label-width="200"
-          :rules="passwordFormRules"
-          class="m-30 w-500"
-        >
-          <NFormItem :label="$t('views.profile.label_old_password')" path="old_password">
-            <NInput
-              v-model:value="passwordForm.old_password"
-              type="password"
-              show-password-on="mousedown"
-              :placeholder="$t('views.profile.placeholder_old_password')"
-            />
-          </NFormItem>
-          <NFormItem :label="$t('views.profile.label_new_password')" path="new_password">
-            <NInput
-              v-model:value="passwordForm.new_password"
-              :disabled="!passwordForm.old_password"
-              type="password"
-              show-password-on="mousedown"
-              :placeholder="$t('views.profile.placeholder_new_password')"
-            />
-          </NFormItem>
-          <NFormItem :label="$t('views.profile.label_confirm_password')" path="confirm_password">
-            <NInput
-              v-model:value="passwordForm.confirm_password"
-              :disabled="!passwordForm.new_password"
-              type="password"
-              show-password-on="mousedown"
-              :placeholder="$t('views.profile.placeholder_confirm_password')"
-            />
-          </NFormItem>
-          <NButton type="primary" :loading="isLoading" @click="updatePassword">
-            {{ $t('common.buttons.update') }}
-          </NButton>
-        </NForm>
-      </NTabPane>
-    </NTabs>
-  </CommonPage>
-</template>
+</script>

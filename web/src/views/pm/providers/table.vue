@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, h } from 'vue'
-import { useMessage, NButton, NPopconfirm, NSpin } from 'naive-ui'
+import { defineComponent, ref, onMounted } from 'vue'
+import { useMessage, NSpin } from 'naive-ui'
 import api from '@/api'
 
 interface Provider {
@@ -20,7 +20,7 @@ interface Provider {
   account: string
 }
 
-const createColumns = (actions: { remove: (row: Provider) => void; edit: (row: Provider) => void }) => {
+const createColumns = () => {
   return [
     { title: 'Name', key: 'name' },
     { title: 'ABN', key: 'abn' },
@@ -29,62 +29,16 @@ const createColumns = (actions: { remove: (row: Provider) => void; edit: (row: P
     { title: 'Bank', key: 'bank' },
     { title: 'BSB', key: 'bsb' },
     { title: 'Account', key: 'account' },
-    { title: 'ID', key: 'id' },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render(row: Provider) {
-        return h('div', { style: 'display: flex; gap: 8px;' }, [
-          h(
-            NButton,
-            {
-              type: 'primary',
-              quaternary: true,
-              size: 'small',
-              onClick: () => actions.edit(row)
-            },
-            { default: () => 'Edit' }
-          ),
-          h(
-            NPopconfirm,
-            {
-              onPositiveClick: () => actions.remove(row),
-              positiveText: 'Yes',
-              negativeText: 'No'
-            },
-            {
-              trigger: () =>
-                h(
-                  NButton,
-                  {
-                    type: 'error',
-                    quaternary: true,
-                    size: 'small'
-                  },
-                  { default: () => 'Delete' }
-                ),
-              default: () => 'Are you sure you want to delete this provider?'
-            }
-          )
-        ])
-      }
-    }
+    { title: 'ID', key: 'id' }
   ]
 }
 
 export default defineComponent({
-  setup(_, { emit }) {
+  setup() {
     const message = useMessage()
     const data = ref<Provider[]>([])
     const loading = ref(false)
-    const columns = createColumns({
-      remove(row: Provider) {
-        handleDelete(row)
-      },
-      edit(row: Provider) {
-        emit('edit-provider', row)
-      }
-    })
+    const columns = createColumns()
     const pagination = ref(false)
 
     const fetchProviders = async () => {
@@ -96,19 +50,6 @@ export default defineComponent({
       }
     }
 
-    const handleDelete = async (provider: Provider) => {
-      loading.value = true
-      try {
-        await api.deleteProvider(provider.id)  // 使用id
-        message.success('Provider deleted successfully')
-        await fetchProviders()  // 等待获取新数据
-      } catch (error) {
-        message.error(error?.message || 'Error deleting provider')
-      } finally {
-        loading.value = false
-      }
-    }
-
     onMounted(() => {
       fetchProviders()
     })
@@ -117,7 +58,6 @@ export default defineComponent({
       data,
       columns,
       pagination,
-      handleDelete,
       loading
     }
   }
