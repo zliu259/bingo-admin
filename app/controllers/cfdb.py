@@ -98,3 +98,43 @@ class CfDatabase:
             account_id=self.account_id,
             sql=sql
         )
+
+    '''#Quotation#'''
+    def list_all_quotations(self):
+        sql = "SELECT * FROM quotation"
+        query_result = self.client.d1.database.query(
+            database_id=self.database_id,
+            account_id=self.account_id,
+            sql=sql
+        )
+        return query_result[0].results
+
+    def get_quotation_by_id(self, id):
+        sql = f"SELECT * FROM quotation WHERE id = '{id}'"
+        query_result = self.client.d1.database.query(
+            database_id=self.database_id,
+            account_id=self.account_id,
+            sql=sql
+        )
+        print(query_result)
+        return query_result[0].results
+
+    def insert_quotation(self, quotations):
+        for quotation_data in quotations:
+            columns = ', '.join(quotation_data.keys())
+            values = ', '.join([f"'{v}'" for v in quotation_data.values()])
+            sql = f"INSERT INTO quotation ({columns}) VALUES ({values})"
+            self.client.d1.database.query(
+                database_id=self.database_id,
+                account_id=self.account_id,
+                sql=sql
+            )
+
+    def update_quotation(self, uuid, quotation):
+        set_values = ', '.join([f"{k} = '{v}'" for k, v in quotation.items()])
+        sql = f"UPDATE quotation SET {set_values} WHERE id = '{uuid}'"
+        self.client.d1.database.query(
+            database_id=self.database_id,
+            account_id=self.account_id,
+            sql=sql
+        )

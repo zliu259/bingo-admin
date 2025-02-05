@@ -1,6 +1,7 @@
 import logging
 
 from fastapi import APIRouter, Query
+from pydantic import BaseModel
 
 from app.controllers.menu import menu_controller
 from app.schemas.base import Fail, Success, SuccessExtra
@@ -89,3 +90,45 @@ async def delete_provider(id:str):
     db.delete_provider(id)
     return Success(msg="Deleted Successfully")
 
+# Quotation
+class Quotation(BaseModel):
+    id: str
+    client_name: str
+    client_contact: str
+    client_details: str
+    client_id: str
+    provider_id: str
+    date: str
+    type: str
+    status: int
+    load: int
+    statistics: str
+    description: str
+    price: float
+    gst: str
+    total_price: float
+    created_by: str
+
+@router.get("/getQuotationList", summary="查看报价单列表")
+async def get_quotation_list():
+    db = CfDatabase()
+    quotations = db.list_all_quotations()
+    return SuccessExtra(data=quotations)
+
+@router.get("/getQuotationById/{quotation_id}", summary="查看报价单")
+async def get_quotation_by_id(quotation_id:str):
+    db = CfDatabase()
+    quotation = db.get_quotation_by_id(quotation_id)
+    return Success(data=quotation)
+
+@router.post("/addQuotation", summary="添加报价单")
+async def add_quotation(data:Quotation):
+    db = CfDatabase()
+    db.insert_quotation([data.dict()])
+    return Success(msg="Created Successfully")
+
+@router.post("/updateQuotation", summary="更新报价单")
+async def update_quotation(data:Quotation):
+    db = CfDatabase()
+    db.update_quotation(data.id, data.dict())
+    return Success(msg="Updated Successfully")

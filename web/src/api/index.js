@@ -53,4 +53,9 @@ export default {
   createProvider: (data = {}) => request.post('/management/addProvider', data),
   updateProvider: (data = {}) => request.post('/management/updateProvider', data),
   deleteProvider: (providerId) => request.delete(`/management/deleteProvider/${providerId}`),
+  // quotation
+  getQuotationList: (params = {}) => request.get('/management/getQuotationList', { params }),
+  getQuotationById: (quotationId) => request.get(`/management/getQuotationById/${quotationId}`),
+  createQuotation: (data = {}) => request.post('/management/addQuotation', data),
+  updateQuotation: (data = {}) => request.post('/management/updateQuotation', data),
 }
