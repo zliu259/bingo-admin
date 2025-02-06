@@ -1,4 +1,5 @@
 <template>
+
     <div>
         <div v-if="loading" style="margin: 200px;">
             <n-spin size="large">
@@ -74,6 +75,7 @@
             <!-- 这里可以添加更多详细信息的展示 -->
         </div>
     </div>
+
 </template>
 
 <script setup>

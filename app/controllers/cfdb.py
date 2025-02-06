@@ -24,6 +24,15 @@ class CfDatabase:
         )
         return query_result[0].results
 
+    def get_client_by_id(self, uuid):
+        sql = f"SELECT * FROM clients WHERE client_id = '{uuid}'"
+        query_result = self.client.d1.database.query(
+            database_id=self.database_id,
+            account_id=self.account_id,
+            sql=sql
+        )
+        return query_result[0].results
+
     def insert_client(self, clients):
         for client_data in clients:
             columns = ', '.join(client_data.keys())

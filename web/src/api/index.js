@@ -44,6 +44,7 @@ export default {
   // management
   // client
   getClientList: (params = {}) => request.get('/management/getClientList', { params }),
+  getClientById: (clientId) => request.get(`/management/getClientById/${clientId}`),
   createClient: (data = {}) => request.post('/management/addClient', data),
   updateClient: (data = {}) => request.post('/management/updateClient', data),
   deleteClient: (clientId) => request.delete(`/management/deleteClient/${clientId}`),

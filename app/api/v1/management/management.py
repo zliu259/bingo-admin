@@ -31,6 +31,12 @@ async def get_client_list():
     clients = db.list_all_clients()
     return SuccessExtra(data=clients)
 
+@router.get("/getClientById/{client_id}", summary="查看客户")
+async def get_client_by_id(client_id:str):
+    db = CfDatabase()
+    client = db.get_client_by_id(client_id)
+    return Success(data=client)
+
 @router.post("/addClient", summary="添加客户")
 async def add_client(data:Client):
     db = CfDatabase()
