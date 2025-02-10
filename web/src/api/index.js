@@ -50,10 +50,12 @@ export default {
   deleteClient: (clientId) => request.delete(`/management/deleteClient/${clientId}`),
   // provider
   getProviderList: (params = {}) => request.get('/management/getProviderList', { params }),
-  getProviderById: (providerId) =>  request.get(`/management/getProviderById/${providerId}`),
+  getProviderById: (providerId) => request.get(`/management/getProviderById/${providerId}`),
   createProvider: (data = {}) => request.post('/management/addProvider', data),
   updateProvider: (data = {}) => request.post('/management/updateProvider', data),
   deleteProvider: (providerId) => request.delete(`/management/deleteProvider/${providerId}`),
+  // service item
+  getServiceItemList: (params = {}) => request.get('/management/getServiceItemList', { params }),
   // quotation
   getQuotationList: (params = {}) => request.get('/management/getQuotationList', { params }),
   getQuotationById: (quotationId) => request.get(`/management/getQuotationById/${quotationId}`),

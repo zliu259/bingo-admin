@@ -108,6 +108,18 @@ class CfDatabase:
             sql=sql
         )
 
+    '''#Service Item#'''
+    def list_all_service_items(self):
+        sql = "SELECT * FROM service_item"
+        query_result = self.client.d1.database.query(
+            database_id=self.database_id,
+            account_id=self.account_id,
+            sql=sql
+        )
+        return query_result[0].results
+
+
+
     '''#Quotation#'''
     def list_all_quotations(self):
         sql = "SELECT * FROM quotation"

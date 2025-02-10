@@ -96,6 +96,19 @@ async def delete_provider(id:str):
     db.delete_provider(id)
     return Success(msg="Deleted Successfully")
 
+# Service Item
+class ServiceItem(BaseModel):
+    code: str
+    item: str
+    unit: str
+    price: float
+
+@router.get("/getServiceItemList", summary="查看服务项目列表")
+async def get_service_item_list():
+    db = CfDatabase()
+    service_items = db.list_all_service_items()
+    return SuccessExtra(data=service_items)
+
 # Quotation
 class Quotation(BaseModel):
     id: str
@@ -131,6 +144,7 @@ async def get_quotation_by_id(quotation_id:str):
 async def add_quotation(data:Quotation):
     db = CfDatabase()
     db.insert_quotation([data.dict()])
+    print(data.dict())
     return Success(msg="Created Successfully")
 
 @router.post("/updateQuotation", summary="更新报价单")
