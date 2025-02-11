@@ -78,7 +78,7 @@ class CfDatabase:
             account_id=self.account_id,
             sql=sql
         )
-        return query_result
+        return query_result[0].results
 
     def insert_provider(self, providers):
         for provider_data in providers:

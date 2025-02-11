@@ -18,7 +18,7 @@
         <Table @view-details="handleViewDetails" />
       </template>
       <template #2>
-        <Details v-if="selectedId" :id="selectedId" />
+        <Details v-if="selectedId" :id="selectedId" :key="selectedId" />
       </template>
     </n-split>
   </n-scrollbar>

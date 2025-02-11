@@ -26,7 +26,19 @@ export default defineComponent({
     const loading = ref(false)
 
     const columns = [
-      { title: 'Date', key: 'date' },
+      {
+        title: 'Date',
+        key: 'date',
+        render(row) {
+          const date = new Date(parseInt(row.date)).toLocaleString('en-AU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            timeZone: 'Australia/Sydney',
+          })
+          return date// Adjust the format as needed
+        }
+      },
       {
         title: 'Status',
         key: 'status',
