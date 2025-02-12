@@ -159,3 +159,53 @@ class CfDatabase:
             account_id=self.account_id,
             sql=sql
         )
+
+    '''#Project#'''
+    def list_all_projects(self):
+        sql = "SELECT * FROM projects"
+        query_result = self.client.d1.database.query(
+            database_id=self.database_id,
+            account_id=self.account_id,
+            sql=sql
+        )
+        return query_result[0].results
+
+    def list_all_active_projects(self):
+        sql = "SELECT * FROM projects WHERE active = 1"
+        query_result = self.client.d1.database.query(
+            database_id=self.database_id,
+            account_id=self.account_id,
+            sql=sql
+        )
+        return query_result[0].results
+
+    def get_project_by_id(self, id):
+        sql = f"SELECT * FROM projects WHERE id = '{id}'"
+        query_result = self.client.d1.database.query(
+            database_id=self.database_id,
+            account_id=self.account_id,
+            sql=sql
+        )
+        return query_result[0].resultsq
+
+    def insert_project(self, projects):
+        for project_data in projects:
+            columns = ', '.join(project_data.keys())
+            values = ', '.join([f"'{v}'" for v in project_data.values()])
+            sql = f"INSERT INTO projects ({columns}) VALUES ({values})"
+            self.client.d1.database.query(
+                database_id=self.database_id,
+                account_id=self.account_id,
+                sql=sql
+            )
+
+    def update_project(self, uuid, project):
+        set_values = ', '.join([f"{k} = '{v}'" for k, v in project.items()])
+        sql = f"UPDATE projects SET {set_values} WHERE id = '{uuid}'"
+        self.client.d1.database.query(
+            database_id=self.database_id,
+            account_id=self.account_id,
+            sql=sql
+        )
+
+

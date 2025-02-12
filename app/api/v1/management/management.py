@@ -152,3 +152,46 @@ async def update_quotation(data:Quotation):
     db = CfDatabase()
     db.update_quotation(data.id, data.dict())
     return Success(msg="Updated Successfully")
+
+# Project
+class Project(BaseModel):
+    id: str
+    status: int
+    active: int
+    date: str
+    due: str
+    task: str
+    current: int
+    note: str
+
+
+@router.get("/getProjectList", summary="查看项目列表")
+async def get_project_list():
+    db = CfDatabase()
+    projects = db.list_all_projects()
+    return SuccessExtra(data=projects)
+
+@router.get("/getActiveProjectList", summary="查看进行中项目列表")
+async def get_active_project_list():
+    db = CfDatabase()
+    projects = db.list_all_active_projects()
+    return SuccessExtra(data=projects)
+
+@router.get("/getProjectById/{project_id}", summary="查看项目")
+async def get_project_by_id(project_id:str):
+    db = CfDatabase()
+    project = db.get_project_by_id(project_id)
+    return Success(data=project)
+
+@router.post("/addProject", summary="添加项目")
+async def add_project(data:Project):
+    db = CfDatabase()
+    db.insert_project([data.dict()])
+    return Success(msg="Created Successfully")
+
+@router.post("/updateProject", summary="更新项目")
+async def update_project(data:Project):
+    db = CfDatabase()
+    db.update_project(data.id, data.dict())
+    return Success(msg="Updated Successfully")
+

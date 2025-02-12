@@ -61,4 +61,11 @@ export default {
   getQuotationById: (quotationId) => request.get(`/management/getQuotationById/${quotationId}`),
   createQuotation: (data = {}) => request.post('/management/addQuotation', data),
   updateQuotation: (data = {}) => request.post('/management/updateQuotation', data),
+  // project
+  getProjectList: (params = {}) => request.get('/management/getProjectList', { params }),
+  getActivedProjectList: (params = {}) => request.get('/management/getActiveProjectList', { params }),
+  getProjectById: (projectId) => request.get(`/management/getProjectById/${projectId}`),
+  createProject: (data = {}) => request.post('/management/addProject', data),
+  updateProject: (data = {}) => request.post('/management/updateProject', data),
+  deleteProject: (projectId) => request.delete(`/management/deleteProject/${projectId}`),
 }
