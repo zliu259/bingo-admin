@@ -1,18 +1,32 @@
 <template>
   <n-space vertical>
-    <n-button type="primary" @click="fetchFiles">刷新文件列表</n-button>
+    <n-flex>
+      <n-button type="primary" @click="fetchFiles">Refresh List</n-button>
+      <n-button type="primary" @click="showUploadDialog">Upload</n-button>
+    </n-flex>
     <n-data-table :columns="columns" :data="fileList" :bordered="true" :pagination="false" />
+
+    <n-dialog-provider>
+      <Upload :id="props.id" />
+    </n-dialog-provider>
   </n-space>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { defineProps } from 'vue'
 import { NDataTable, NButton, NSpace } from 'naive-ui'
+import Upload from './upload.vue'
 
-// 文件列表数据
+const props = defineProps({
+  id: {
+    type: [String, Number],
+    required: true,
+  },
+})
+
 const fileList = ref([])
 
-// 定义表格列
 const columns = [
   {
     title: 'File',
@@ -36,14 +50,23 @@ const columns = [
   },
 ]
 
-// 获取文件列表
 const fetchFiles = async () => {
   try {
-    const response = await fetch('https://10fa00d94392.bingocommunications.com.au/1b78ea79c35e') // 替换为你的API地址
+    const response = await fetch(
+      `https://10fa00d94392.bingocommunications.com.au/1b78ea79c35e?prefix=project/${props.id}/`
+    ) // 替换为你的API地址
     const data = await response.json()
     fileList.value = data.files
   } catch (error) {
     console.error('获取文件列表失败:', error)
   }
 }
+
+const isUploadDialogVisible = ref(false)
+
+const showUploadDialog = () => {
+  isUploadDialogVisible.value = true
+}
+
+
 </script>

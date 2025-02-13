@@ -186,7 +186,7 @@ class CfDatabase:
             account_id=self.account_id,
             sql=sql
         )
-        return query_result[0].resultsq
+        return query_result[0].results
 
     def insert_project(self, projects):
         for project_data in projects:
