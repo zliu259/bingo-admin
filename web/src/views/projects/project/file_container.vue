@@ -33,6 +33,10 @@ const columns = [
     key: 'name',
   },
   {
+    title: 'Last Modified',
+    key: 'lastModified',
+  },
+  {
     title: 'Operation',
     key: 'url',
     render(row) {

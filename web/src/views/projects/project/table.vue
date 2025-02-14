@@ -1,9 +1,9 @@
 <template>
-    <n-space vertical>
-      <n-button type="primary" @click="fetchAllProjects">展示所有项目</n-button>
-      <n-data-table :columns="columns" :data="projectList" :bordered="true" :pagination="false" />
-    </n-space>
-  </template>
+  <n-space vertical>
+    <n-button type="primary" @click="fetchAllProjects">展示所有项目</n-button>
+    <n-data-table :columns="columns" :data="projectList" :bordered="true" :pagination="false" />
+  </n-space>
+</template>
 
 <script setup>
 import { ref, onMounted, h } from 'vue'
@@ -49,7 +49,11 @@ const columns = [
     title: 'Active',
     key: 'active',
     render(row) {
-      return h(NTag, { type: row.active ? 'success' : 'default' }, { default: () => (row.active ? 'Active' : 'Inactive') })
+      return h(
+        NTag,
+        { type: row.active ? 'success' : 'default' },
+        { default: () => (row.active ? 'Active' : 'Inactive') }
+      )
     },
   },
   {

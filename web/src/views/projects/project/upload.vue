@@ -1,5 +1,11 @@
 <template>
   <n-space vertical>
+    <!-- 自定义文件名输入框 -->
+    <!-- n-input v-model:value="customFilename" :placeholder="`${alias}`" /-->
+    <!-- 上传路径输入框 -->
+    <!--n-input v-model:value="customPath" placeholder="输入上传路径，如 folder/subfolder (可选)" /-->
+
+    <!-- 上传组件 -->
     <n-upload
       action="https://upload.liuzihao1997.workers.dev/upload"
       name="file"
@@ -12,25 +18,150 @@
       <n-upload-dragger>
         <div style="font-size: 16px">
           <n-icon size="48" :depth="3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-              <path
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <mask id="lineMdCloudAltUploadFilledLoop0">
+                <g
+                  fill="none"
+                  stroke="#fff"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-dasharray="64"
+                    stroke-dashoffset="64"
+                    d="M7 19h11c2.21 0 4 -1.79 4 -4c0 -2.21 -1.79 -4 -4 -4h-1v-1c0 -2.76 -2.24 -5 -5 -5c-2.42 0 -4.44 1.72 -4.9 4h-0.1c-2.76 0 -5 2.24 -5 5c0 2.76 2.24 5 5 5Z"
+                  >
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      dur="0.6s"
+                      values="64;0"
+                    />
+                    <set fill="freeze" attributeName="opacity" begin="0.7s" to="0" />
+                  </path>
+                  <g fill="#fff" stroke="none" opacity="0">
+                    <circle cx="12" cy="10" r="6">
+                      <animate
+                        attributeName="cx"
+                        begin="0.7s"
+                        dur="30s"
+                        repeatCount="indefinite"
+                        values="12;11;12;13;12"
+                      />
+                    </circle>
+                    <rect width="9" height="8" x="8" y="12" />
+                    <rect width="15" height="12" x="1" y="8" rx="6">
+                      <animate
+                        attributeName="x"
+                        begin="0.7s"
+                        dur="21s"
+                        repeatCount="indefinite"
+                        values="1;0;1;2;1"
+                      />
+                    </rect>
+                    <rect width="13" height="10" x="10" y="10" rx="5">
+                      <animate
+                        attributeName="x"
+                        begin="0.7s"
+                        dur="17s"
+                        repeatCount="indefinite"
+                        values="10;9;10;11;10"
+                      />
+                    </rect>
+                    <set fill="freeze" attributeName="opacity" begin="0.7s" to="1" />
+                  </g>
+                  <g fill="#000" fill-opacity="0" stroke="none">
+                    <circle cx="12" cy="10" r="4">
+                      <animate
+                        attributeName="cx"
+                        begin="0.7s"
+                        dur="30s"
+                        repeatCount="indefinite"
+                        values="12;11;12;13;12"
+                      />
+                    </circle>
+                    <rect width="9" height="6" x="8" y="12" />
+                    <rect width="11" height="8" x="3" y="10" rx="4">
+                      <animate
+                        attributeName="x"
+                        begin="0.7s"
+                        dur="21s"
+                        repeatCount="indefinite"
+                        values="3;2;3;4;3"
+                      />
+                    </rect>
+                    <rect width="9" height="6" x="12" y="12" rx="3">
+                      <animate
+                        attributeName="x"
+                        begin="0.7s"
+                        dur="17s"
+                        repeatCount="indefinite"
+                        values="12;11;12;13;12"
+                      />
+                    </rect>
+                    <set fill="freeze" attributeName="fill-opacity" begin="0.7s" to="1" />
+                    <animate
+                      fill="freeze"
+                      attributeName="opacity"
+                      begin="0.7s"
+                      dur="0.5s"
+                      values="1;0"
+                    />
+                  </g>
+                  <g fill="#000" stroke="none">
+                    <path d="M10 17h4v0h-4z">
+                      <animate
+                        fill="freeze"
+                        attributeName="d"
+                        begin="1.3s"
+                        dur="0.2s"
+                        values="M10 17h4v0h-4z;M10 17h4v-5h-4z"
+                      />
+                    </path>
+                    <path d="M7 13h10l-5 0z">
+                      <animate
+                        fill="freeze"
+                        attributeName="d"
+                        begin="1.5s"
+                        dur="0.1s"
+                        values="M7 13h10l-5 0z;M7 13h10l-5 -5z"
+                      />
+                      <animateMotion
+                        begin="1.6s"
+                        calcMode="linear"
+                        dur="1.5s"
+                        keyPoints="0;0.25;0.5;0.75;1"
+                        keyTimes="0;0.1;0.5;0.8;1"
+                        path="M0 0v-1v2z"
+                        repeatCount="indefinite"
+                      />
+                    </path>
+                  </g>
+                </g>
+              </mask>
+              <rect
+                width="24"
+                height="24"
                 fill="currentColor"
-                d="M16.175 13H4v-2h12.175l-5.6-5.6L12 4l8 8l-8 8l-1.425-1.4z"
+                mask="url(#lineMdCloudAltUploadFilledLoop0)"
               />
             </svg>
           </n-icon>
         </div>
-        <n-text style="font-size: 16px">Click or drag file to this area to upload</n-text>
-        <n-p depth="3" style="margin: 8px 0 0 0"
-          >Chinese to English Digital Stamp in PNG format</n-p
-        >
+
+        <n-text style="font-size: 16px"> Click or drag file to this area to upload </n-text>
+
+        <n-p depth="3" style="margin: 8px 0 0 0">
+          Upload to project: {{ props.id }}
+        </n-p>
       </n-upload-dragger>
     </n-upload>
   </n-space>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineProps } from 'vue'
 
 const props = defineProps({
@@ -40,26 +171,36 @@ const props = defineProps({
   },
 })
 
-const customPath = ref(`project/${props.id}/`) // Custom upload path
+const customFilename = ref(``) // 自定义文件名
+const customPath = ref(`project/${props.id}/`) // 自定义上传路径
 
-// Extra form data to be submitted with the file
-const extraData = ref({})
-
-function beforeUpload(file) {
-  // Set the file name to the original file name
-  extraData.value = {
-    filename: file.name,
+// 额外的表单数据，会和文件一起提交
+const extraData = computed(() => {
+  return {
+    filename: customFilename.value,
     path: customPath.value,
   }
-  console.log('Preparing to upload:', file)
+})
+
+function beforeUpload(file) {
+  // 可在此处增加文件大小、类型等校验
+  console.log('准备上传:', file)
   return true
 }
 
 function handleSuccess(response, file) {
-  console.log('Upload successful:', response, file)
+  console.log('上传成功:', response, file)
 }
 
 function handleError(error, file) {
-  console.error('Upload failed:', error, file)
+  console.error('上传失败:', error, file)
 }
+
+// 监听 alias 的变化，并更新 customFilename 的默认值
+watch(
+  () => props.id,
+  (newID) => {
+    customFilename.value = newID
+  }
+)
 </script>
